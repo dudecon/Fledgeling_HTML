@@ -235,7 +235,7 @@ function changeNode()
 	numimages = node_intro_00[0];
 	}
 	imageselection = getRandomInteger(numimages);
-	npic.innerHTML = "<img title=\"image for " + curnode + "\" src=\"" + imageDir + "/" + imagename + imageselection + ".jpg\">";
+	npic.innerHTML = "<a href=\"javascript:chooseOption(2);\"><img title=\"image for " + curnode + "\" src=\"" + imageDir + "/" + imagename + imageselection + ".jpg\"></a>";
 	//npic.innerHTML = "image for " + curnode;
 	// the node description
 	description.innerHTML = nodearray[1];
