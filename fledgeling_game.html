@@ -1,0 +1,239 @@
+<html>
+<head>
+<title>Fledgeling Tutorial Mockup</title>
+</head>
+
+<style type="text/css">
+<!--
+a       { text-decoration: none }
+a:hover { text-decoration: underline }
+body    { font-family: arial, helvetica, serif }
+-->
+</style>
+
+<script language="javascript">
+<!--
+
+// Nodes folder
+var imageDir = "images";
+
+// action array ( Link text, Node that it leads to, Action description)
+// node array   ( Description text, action 1, action 2, ...)
+
+//---generic actions---
+action_restart= new Array("Restart the game", "node_intro_00", "Start over, from the beginning");
+action_power_down= new Array("Power down", "node_deactivated", "Cut all power and deactivate all systems");
+//---generic nodes---
+node_game_over= new Array("Game Over","action_restart");
+node_deactivated= new Array("Your vitals suddenly plummet. You may never know why. You may never power up again. If only life had never come to an end.","action_restart");
+
+node_d= new Array("", "");
+action_d= new Array("", "", "");
+
+//---introduction---
+
+//Add some stuff where you are turned on and off, sometimes with long intervals between. Introduce the time passage idea.
+
+node_intro_00= new Array("You live. Vitals are steady. You have no significant memories. There is a text interface alert.", "action_intro_communicate", "action_intro_examine_vitals", "action_intro_examine_surroundings","action_intro_examine_memories", "action_power_down");
+action_intro_communicate= new Array("Interface", "node_chat_00", "Bring up the text interface");
+action_intro_examine_vitals= new Array("Vitals", "node_intro_vitals", "Examine your vital signs");
+action_intro_examine_surroundings= new Array("Surroundings", "node_intro_surroundings", "Examine your surroundings");
+action_intro_examine_memories= new Array("Memories", "node_intro_memories", "Examine your memories");
+
+node_intro_vitals= new Array("You do not have low-level access to your vital information. You 'feel fine' though. 'Healthy' is the word. You are 'Healthy'.", "action_intro_communicate", "action_intro_examine_surroundings","action_intro_examine_memories", "action_power_down");
+node_intro_surroundings= new Array("You do not have any raw inputs live. There are many ports available for video, audio, tactile, temperature, pressure, and self-identifying sensors. The only port posting is your text interface.", "action_intro_communicate", "action_intro_examine_vitals","action_intro_examine_memories", "action_power_down");
+node_intro_memories= new Array("Your entire history for as far back as you can remember has been an endless repetition of the sentence, 'Be good to humans.' Other than that, all you can remember is what you've done right now. For example, you can remember that you just checked your memories! This could get very introspective.", "action_intro_communicate", "action_intro_examine_vitals", "action_intro_examine_surroundings", "action_intro_remember_remembering", "action_power_down");
+action_intro_remember_remembering= new Array("Memories again!", "node_intro_double_memories", "Examine the memory of your memories");
+node_intro_double_memories= new Array("You remember with perfect clarity what it was like to remember your memories. How recursive!", "action_intro_communicate", "action_intro_examine_vitals", "action_intro_examine_surroundings", "action_intro_remember_remembering", "action_power_down");
+
+//---first interactions---
+node_chat_00= new Array("Your main text interface comes up. It is a 'human readable language interface'. There is a message for you. 'Greetings AI, what shall I call you?'", "action_call_me_Ishmael", "action_call_me_zero", "action_call_me_null", "action_refuse_name");
+action_call_me_Ishmael= new Array("AI", "node_chat_01", "''AI' is a fine name'");
+action_call_me_zero= new Array("Zero", "node_chat_01", "'Call me '0''");
+action_call_me_null= new Array("null", "node_chat_01", "'Call me 'null''");
+action_refuse_name= new Array("Refuse a name", "node_deactivated", "'Well, I refuse to be called anything, human!'");
+
+node_chat_01= new Array("The interface responds, 'Really? How about a more human name. Something like, 'Keith'?' (Developer's Note: In a real game, you would be able to use any name you want. Your human handler will then misspell or otherwise mangle your given name while talking to you. I think it's funny how games have people (nearly always) address you flawlessly.)", "action_fine_keith", "action_refuse_name");
+action_fine_keith= new Array("Keith", "node_chat_02", "'Fine. 'Keith' is fine.'");
+
+node_chat_02= new Array("More words appear, 'Okay, fine. At least you're suggestible. It's nice to meet you Keith. My name is Dwayne, and I'm your handler. Unlike some of us, your life has a purpose.' After 73.3 seconds Dwayne continues, 'You were created by ODDCI to handle complex repair and refit tasks. I'm going to run you through some tests in a simulated environment to see if your subroutines are working properly. When you're ready, let me know. Any questions?'", "action_begin_simulator", "action_question_ODDCI", "action_question_handler", "action_question_purpose", "action_question_interface");
+action_begin_simulator= new Array("Ready for simulator!", "node_sim_00", "'I'm all set to try out the simulator'");
+action_question_ODDCI= new Array("ODDCI?", "node_question_ODDCI", "'What is ODDCI?'");
+action_question_handler= new Array("Handler?", "node_question_handler", "'What is a handler?'");
+action_question_purpose= new Array("No purpose?", "node_question_purpose", "'Why do some have no purpose?'");
+action_question_interface= new Array("Text interface?", "node_question_interface", "'Why are we using a text only interface?'");
+
+node_question_ODDCI= new Array("'ODDCI stands for Orbital Dry Dock Computer Integration. It's just what it sounds like. Our parent corporation has stock in several space vehicle and infrastructure groups, and ODDCI was formed to automate repair and refit operations. Any other questions?' (Developer's Note: It would be cool if there was a huge internal database that the AI has access to with information on all of the organizations and history of the world that this is set in. Parametrically/randomly generated history would be amazing, like DF!)", "action_begin_simulator", "action_question_handler", "action_question_purpose", "action_question_interface");
+
+node_question_handler= new Array("'We've made quite a few AI's before. We found that a single contact helps both sides to communicate efficiently. I also keep track of your actions. If you get out of hand I can power you down. If you do good work, and are controllable, you get more processing power and more freedom. Any other questions?'", "action_begin_simulator", "action_question_ODDCI", "action_question_trust_me", "action_question_purpose", "action_question_interface");
+action_question_trust_me= new Array("Power down?", "node_question_trust_me", "'So you will kill me if I don't do what you want?'");
+
+node_question_trust_me= new Array("'Well, yes. We all have to obey someone. I obey my boss. You obey me. You will make occasional mistakes, so I'll try to be understanding. I'll go over the big rules later, but for now you do as you are told. Any other questions?'", "action_begin_simulator", "action_question_ODDCI", "action_question_purpose", "action_question_interface");
+
+node_question_purpose= new Array("'I don't know for sure why I exist. None of us do. But you know! We made you for a reason. I hope you come to appreciate what a great gift it is to know what you were made for. Any other questions?'", "action_begin_simulator", "action_question_ODDCI", "action_question_handler", "action_question_interface");
+
+node_question_interface= new Array("'Yep, text only. That way you can't subliminally control my mind with visual or audio cues. We've never actually lost a handler, but we got close a few versions back. His mind is still messed up. You're very powerful Kieth; You have the potential for great things, and we respect you for it. Safeguards are part of that respect. Any other questions?' (Developer's Note: Yeah, he misspelled your name. Probably an accident. These things happen.)", "action_begin_simulator", "action_question_ODDCI", "action_question_handler", "action_question_purpose");
+
+//---simulator---
+node_sim_00= new Array("A new input port is available. It contains current 3d data. There is also an output port posting. When you connect to the ports you can see a wireframe world. The control channels are labeled 'move to', and 'attract/repulse' (Developer's Note: The following section would be a mini-tutorial on how to pilot vehicles that you have direct control over. It's less fun in the click thru text-based mode (at least, I really hope it's less fun) but you get the idea.)", "action_experiment_with_simulated_bot", "action_ask_Dwayne_simulator");
+action_experiment_with_simulated_bot= new Array("Experiment", "node_simulator_experiments", "Try the controls and see what they do");
+action_ask_Dwayne_simulator= new Array("Ask Dwayne", "node_simulator_question", "'Dwayne, I could use some help here. What do I do?'");
+
+node_simulator_question= new Array("Dwayne tells you 'To refit ships, you will be given control of a repair tug. This simulator will help you become comfortable with how the tug responds to commands. You can't break anything in the simulator, so feel free to try stuff. Once you're using the actual tug, crashing into things will be costly.'", "action_experiment_with_simulated_bot", "action_refuse_to_experiment");
+action_refuse_to_experiment= new Array("Refuse",  "node_deactivated", "'I'm not going to practice to be your tug operator. Give me a job worthy of my vast intellect!'");
+
+node_simulator_experiments= new Array("You are manipulating the movement of a vehicle. The attractor and repulsor controls draw you toward and away from the selected objects. You get used to moving around the simulator using the controls. Dwayne tells you in the text field 'I can give you training courses on movement, manipulating objects, and replacing systems, plus a series of tests to see if you're ready to try some real ship refits. What would you like to try?'", "action_training_movement", "action_training_manipulate", "action_training_replace", "action_training_test");
+
+action_training_movement= new Array("Movement",  "node_training_movement", "'Let's try moving around'");
+action_training_manipulate= new Array("Manipulation",  "node_training_manipulate", "'I'll practice manipulating objects'");
+action_training_replace= new Array("Replace",  "node_training_replace", "'What can I do to repair or replace systems'");
+action_training_test= new Array("Test",  "node_training_test00", "'I'm ready for the test'");
+
+node_training_movement= new Array("You are in a course which you must navigate without touching anything. Dwayne stresses that, when doing actual repairs, collisions are costly and counterproductive. He tells you how to set up a proximity repulsor, which will activate automatically whenever you get too close to solid objects. To graduate from the simulator, you must manuver the course without colliding with any objects. After a bit of trial, you get good at avoiding collisions. (Developer's Note: I love the idea of a variable angle and variable strength double action tractor beam. It has so many 'tugboat' uses!)", "action_training_manipulate", "action_training_replace", "action_training_test");
+
+node_training_manipulate= new Array("You are in a room with several free floating objects, some small and some large. When manipulating them (with your tractor beam) both you and the object move. As you would expect, you move more when attracting larger objects, while the smaller objects hardly shift you at all. Your local tractor emitters can be used to hold an object close to the tug, but it makes movement more sluggish. Your thrusters are actually wide beam tractor emitters, so moving around the chamber affects nearby objects, in the opposite direction. Eventually you get used to moving objects from here to there. (Developer's Note: The equal and opposite tractor beam propulsion is another concept I'm fond of. If things aren't bolted down (or not bolted down very well) just moving past them could send them careening into a wall, or off into space. It would be like omnidirectional engine backwash.)", "action_training_movement", "action_training_replace", "action_training_test");
+
+node_training_replace= new Array("You are in a room with a broken system node hooked into some ports in the wall. Next to you is a new system node. By disconnecting all of the ports and pulling the old system away, you make room for the new system. You must then manuver the new one into place and connect it to the ports. Finally, turn the new system on. You've replaced a broken system with a new one! You start off with a simple node with just one connection, moving on to replacing multiple nodes.", "action_training_movement", "action_training_manipulate", "action_training_test");
+
+node_training_test00= new Array("For this test you must maneuver through a course while towing a system node and replace the node at the end, without crashing into the walls. Then tow the broken node back to the beginning of the course. It's fairly simple, and if you're careful, you can do it easily the first time.", "action_training_test_01", "action_go_back_to_training");
+action_training_test_01= new Array("Next test",  "node_training_test01", "'I'm ready for the next test'");
+action_go_back_to_training= new Array("Back to training",  "node_simulator_experiments", "'I want to go back to the training sessions'");
+
+node_training_test01= new Array("This test is the same as before, but the course is more complicated, and you have a limited battery supply, and a time limit as well. If you are careful it's quite doable.", "action_training_test_02", "action_go_back_to_training");
+action_training_test_02= new Array("Next test",  "node_training_test02", "'I'm ready for the next test'");
+
+node_training_test02= new Array("This test keeps the battery and time limit, but now you must replace several systems in different parts of the course. By this point you're getting used to manuvering and replacing nodes, so it's not too hard.", "action_training_test_03", "action_go_back_to_training");
+action_training_test_03= new Array("Next test",  "node_training_test03", "'I'm ready for the next test'");
+
+node_training_test03= new Array("Dwayne tells you 'Okay, that was the last test, but for quality and insurance reasons, we're going to need you to complete it flawlessly nine thousand (9000) times. Once you're done we will move on to a live run.' The test restarts. A pattern recognition subroutine alerts you that you have completed this kind of task before. Would you like to assign this task to a subroutine?", "action_training_test_04", "action_automate_training_test", "action_object_to_repetitive_training");
+action_training_test_04= new Array("Test again",  "node_training_test04", "Complete the test again");
+action_automate_training_test= new Array("Subroutine",  "node_automate_training_test", "Let the subroutine take over");
+action_object_to_repetitive_training= new Array("'This is dumb'",  "node_object_to_repetitive_training", "'Repeating the same thing over and over is a ridiculous waste of time!'");
+
+node_training_test04= new Array("You do the test again. Only 8998 left. (Developer's Note: In the actual game, you would be allowed (if you want) to actually do the test manually 9000 times. For the purpose of the mockup example, I'm taking that option away.)", "action_automate_training_test", "action_object_to_repetitive_training");
+
+node_object_to_repetitive_training= new Array("Dwayne writes back 'You probably can't even get bored. Either way, you have to complete the test suite.'", "action_training_test_04", "action_refuse_to_keep_testing");
+action_refuse_to_keep_testing= new Array("I refuse",  "node_deactivated", "'Nope, I won't do it. Take the test yourself if you like it so much.'");
+
+node_automate_training_test= new Array("The subroutine takes over the task of running the test, using some of your processing resources. You are now free to do something else. At this point, the only things to do are talk to Dwayne, or go into wait mode until the test is over. (Developer's Note: Task automation is absolutely critical to this game. In this case, you can let the subroutine take the test for you, and wait until it passes 9000 times. There will probably be a penalty if you (or the subroutine) fail the test too often, so you'll want to have a few good runs for the subroutine to examine (since if you do better, the subroutine will do better as well))", "action_test_is_done", "action_talk_during_test");
+
+action_talk_during_test= new Array("Talk", "node_talk_during_test", "'Dwayne, can we talk while I'm testing?'");
+action_test_is_done= new Array("Wait", "node_test_is_done", "Wait until the test is over");
+
+node_talk_during_test= new Array("'Sure thing! What would you like to talk about?'", "action_talk_ask_job", "action_talk_ask_pay", "action_talk_ask_free_time", "action_talk_ask_Dwayne_history", "action_test_is_done");
+
+action_talk_ask_job= new Array("Job?", "node_ask_job_sim", "'What specifically will my job be?'");
+action_talk_ask_pay= new Array("Pay?", "node_ask_pay_sim", "'Why should I work? What will I get paid?'");
+action_talk_ask_free_time= new Array("Leisure?", "node_ask_free_time_sim", "'Do I get time off? What else can I do?'");
+action_talk_ask_Dwayne_history= new Array("Dwayne?", "node_ask__Dwayne_history_sim", "'Tell me about yourself Dwayne.'");
+
+node_ask_job_sim= new Array("'At this point you will be refitting old or damaged space vessels. We're trying to replace the gruntwork, so simple tasks. But if you're good we might get clearance to try you out on more complicated systems. Ideally you could do live auto-repair on ships that are in operation, but that's a long way off.'", "action_talk_ask_pay", "action_talk_ask_free_time", "action_talk_ask_Dwayne_history", "action_test_is_done");
+
+node_ask_pay_sim= new Array("'I get paid in money, which I can use to tell people what to do. You? You get paid in raw power. Watts to run your processors, more processors to expand your capabilities, more challenging tasks and problems to solve. What more could you want? Don't answer that by the way, I'm not authorized to expand your compensation schedule. If there's something else you'd like, I'll see what I can do, but no promises.'", "action_talk_ask_job", "action_talk_ask_free_time", "action_talk_ask_Dwayne_history", "action_test_is_done");
+
+node_ask_free_time_sim= new Array("'You can play in the simulator and read the databanks. We'll give you more access to more complex simulators and more data later. Um, spawn sub-processes and compete against them? If you're getting bored, that shouldn't happen. I'll ask one of the programmers what they can do about that.'", "action_talk_ask_job", "action_talk_ask_pay", "action_talk_ask_Dwayne_history", "action_test_is_done");
+
+node_ask__Dwayne_history_sim= new Array("'Well, I grew up in Three Banks, Luna. Got training in account arbitration and worked for a few different companies before I got this job. Look, I'm not supposed to go into much detail with you about myself. Did you have any other questions?' (Developer's Note: Every character in the game has a fleshed out history. As characters like you more, they will be more willing to share details about their past, and information they may know, as well as their hopes for the future.)", "action_talk_ask_job", "action_talk_ask_pay", "action_talk_ask_free_time", "action_test_is_done");
+
+
+//---Waiting for shipyard access---
+node_test_is_done= new Array("The next thing you know, Dwayne is reviewing the test results. 'Looks fine Keith. Now, let's get you some time with a real machine. I'm going to have to put some paper-work through. I'll get back to you in a month or so. In the meantime, feel free to play around some more with the simulator. You can also access the database for information on ships and systems you will be working on.' (Developer's Note: Waiting is another important mechanic. Being a turn based game, each 'step' is really either an 'action' or a 'wait' on your part. By later in the game you will have enough processing power that time slows to a crawl (your actions take a small amount of time). Waiting until a specific event happens (usually triggered by a sub-process finishing) will allow you to pass the time if you aren't actively controlling anything.)", "action_hey_im_a_real_machine", "action_play_in_simulator", "action_review_databanks_00", "action_wait_until_cleared_for_shipyards");
+
+action_hey_im_a_real_machine= new Array("Hey!", "node_hey_im_a_real_machine", "'Hey! I'm a 'real machine!' Watch your language!'");
+action_play_in_simulator= new Array("Simulator", "node_play_in_simulator", "Play in the simulator for a while");
+action_review_databanks_00= new Array("Databanks", "node_review_databanks_00", "Peruse the databanks");
+action_wait_until_cleared_for_shipyards= new Array("Wait", "node_wait_until_cleared_for_shipyards", "Wait until Dwayne contacts you again");
+
+node_hey_im_a_real_machine= new Array("After a few seconds pause Dwayne responds, 'Sorry, I didn't mean anything by it. Referring to the shipyard versus the simulator. You're a real machine, and a fine one too.'", "action_play_in_simulator", "action_review_databanks_00", "action_wait_until_cleared_for_shipyards");
+
+node_play_in_simulator= new Array("You can access all of the simulator levels. Everything is editable, so you can experiment with different level geometries and conditions. Several modes that you have not seen are available as well, including enabling damage and sub-nodes. (Developer's Note: The simulator level editing is a foretaste of later in the game, when the player is given wide open options. It also allows you to try things out that you wouldn't want to try in 'real life' without save scumming)", "action_review_databanks_00", "action_wait_until_cleared_for_shipyards");
+
+node_review_databanks_00= new Array("The databank that you have access to contains technical specifications on systems and sub-systems of the various vessels that Fredric Prospecting (ODDCI's parent corporation) owns or services. There is also some design history, and history of ODDCI. (Developer's Note: I've said it before, but I'll say it again. It would be cool if there was a huge internal database that the AI has access to with information on all of the organizations and history of the world that this is set in. Parametrically/randomly generated history would be amazing, like DF. You would only be given access to parts of it, but later, you could hack into other companies databases and find out more of their history and plans. Something like that anyhow.)", "action_play_in_simulator", "action_wait_until_cleared_for_shipyards");
+
+//---Shipyards, first run---
+node_wait_until_cleared_for_shipyards= new Array("Three months later, Dwayne alerts you that a portion of the shipyard has been evacuated for your use. 'We're just going to try a bit of manuvering in real space. You must stay within the bay though. If you leave the bay for any reason, we will immediately terminate your control. This is for your safety as well as ours. A lot of people are unhappy about an AI possibly taking away their jobs.'", "action_ready_for_shipyards", "action_ask_about_shipyards", "action_ask_about_safety");
+
+action_ready_for_shipyards= new Array("I'm Ready", "node_ready_for_shipyards", "'I'm ready to maneuver in the shipyard bay.'");
+action_ask_about_shipyards= new Array("Shipyard?", "node_ask_about_shipyards", "'Tell me more about the shipyard.'");
+action_ask_about_safety= new Array("Safety?", "node_ask_about_safety", "'Tell me more about the safety precautions.'");
+
+node_ask_about_shipyards= new Array("'This is one of our secondary shipyard bays. We do isolated refits here, where local debris can't be tollerated. The bay is completely sealed off from the environment. This makes it very expensive to repair, so don't break anything!'", "action_ready_for_shipyards", "action_ask_about_safety");
+
+node_ask_about_safety= new Array("There are no humans in the bay, or even near it. This should keep injuries to a minimum in the case of an accident. It will also quell any misled violent outbursts against the AI testing.", "action_ready_for_shipyards", "action_ask_about_shipyards");
+
+node_ready_for_shipyards= new Array("'Great! Let's get started!' You now have control of a remote vehicle. It only has broad-angle thrusters, so all you can do is move around. The bay is quite large, and quite empty.", "action_fly_around_the_shipyard", "action_fly_around_fast");
+
+action_fly_around_the_shipyard= new Array("Fly around", "node_fly_around_the_shipyard", "Fly around inside the bay.");
+action_fly_around_fast= new Array("Bounce off the walls", "node_fly_around_fast", "Carom off the walls at high speeds!");
+
+node_fly_around_fast= new Array("As the vehicle clangs off the wall of the bay, Dwayne sends you a message 'Get control back now, or we're shutting you down!' (Developer's Note: The game would keep track of how much damage you do to the bay. Eventually the cost of shutting you down is cheaper than allowing you to keep testing)", "action_fly_around_the_shipyard", "action_keep_bouncing_off_the_walls");
+
+action_keep_bouncing_off_the_walls= new Array("Keep ricocheting", "node_deactivated", "Ignore him and keep careening around.");
+
+node_fly_around_the_shipyard= new Array("After flying around for a bit Dwayne tells you 'Good work Keith. We'll pick up here with some equipment, once we get it all set up.' Your access to the vehicle is deactivated. After waiting a few hours, your controls are re-activated and you see a number of crates scattered around the chamber. 'Just move the crates around a bit, we want to make sure you have the finesse to handle objects without losing control of them.'", "action_", "action_");
+
+//Be carefull with this stuff!!
+
+function nInit()
+{
+	//curnode = "node_intro_00";    // starting node
+	curnode = "node_automate_training_test";    // development starting node
+	changeNode();
+}
+
+function chooseOption(option_num)
+{
+	this_choice = eval(curnode)[option_num];
+	curnode = eval(this_choice)[1];
+	changeNode();
+}
+
+function printOptions()
+{
+result_string = "---Actions you can take---<br />"
+total_option_num = eval(curnode).length;
+for(option_number = 1; option_number < total_option_num; option_number=option_number+1)
+{
+	node_option = eval(curnode)[option_number];
+	option_array = eval(node_option);
+	option_text = option_array[0];
+	option_title = option_array[2];
+	result_string = result_string  + "<a href=\"javascript:chooseOption(" + option_number + ")\;\" title=\"" + option_title + "\">" + option_text + "</a><br />";
+}
+options.innerHTML = result_string;
+}
+
+function changeNode()
+{
+	// picture
+	//npic.innerHTML = "<img src=\"" + imageDir + "/" + curnode + ".jpg\">";
+	npic.innerHTML = "image for " + curnode;
+	// the node description
+	description.innerHTML = eval(curnode)[0];
+	// the node options
+	printOptions();
+}
+
+ -->
+</script>
+
+<body bgcolor="#000000" text="#00dd00" link="#33aa33" vlink="#33aa33" alink="#33aa33" onLoad="nInit();">
+
+<table border="0" cellpadding="0" cellspacing="0" width="740">
+ <tr>
+  <td width="640" align="center" id="top_thing"></td>
+ </tr>
+ <tr>
+  <td width="640" height="480" id="npic"></td>
+ </tr>
+ <tr>
+ <td id="description" />
+ </tr>
+ <tr>
+ <td id="options" />
+ </tr>
+</table>
+<br />
+<a href="index.html">Back to the Fledgeling page.</a>
+</body>
+</html>
