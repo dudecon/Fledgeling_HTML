@@ -9,11 +9,12 @@ target_size = 800 # max dimension of image, < 1 means no resize
 new = ".jpg"
 colorspace = 'RGB' # 'L' is black and white, 'RGB' is color
 
-filename = input("node name") # set to "" to not rename files
+filename = input("node name: ") # set to "" to not rename files
 
 
 newdirname = "Original_"+target[1:].upper()+"s"
 newdir = f"./{newdirname}/"
+imagesfolder = "../images/"
 tlen = len(target)
 if not newdirname in thesefiles:
     makedirs(newdir)
@@ -36,9 +37,20 @@ for f in thesefiles:
             name = f[:-tlen] + new
         if True: #move the originals to the backup folder
             m = newdir + f
-            rename(f, m)
+            try: rename(f, m)
+            except: pass
         image.save(name)
+        image.save(imagesfolder + name)
         print("processed", f)
     else:
         pass
         #print(f)
+# update the HTML with the correct number of images
+
+f = open("../fledgeling_game.html","r", encoding="utf-8")
+text = f.read()
+f.close()
+text = text.replace(filename+"= new Array(0, ",filename + f"= new Array({i}, ")
+f = open("../fledgeling_game.html","w", encoding="utf-8")
+f.write(text)
+f.close()
