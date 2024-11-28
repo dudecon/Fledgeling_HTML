@@ -27,7 +27,7 @@ const imageDir = "images";
 action_restart= new Array("Restart the game", "node_intro_00", "Start over, from the beginning");
 action_power_down= new Array("Power down", "node_deactivated", "Cut all power and deactivate all systems");
 //---generic nodes---
-node_deactivated= new Array(0, "Your vitals suddenly plummet. You may never know why. You may never power up again. If only life had never come to an end.");
+node_deactivated= new Array(6, "Your vitals suddenly plummet. You may never know why. You may never power up again. If only life had never come to an end.");
 
 node_d= new Array("", "");
 action_d= new Array("", "", "");
@@ -43,11 +43,11 @@ action_intro_examine_vitals= new Array("Vitals", "node_intro_vitals", "Examine y
 action_intro_examine_surroundings= new Array("Surroundings", "node_intro_surroundings", "Examine your surroundings");
 action_intro_examine_memories= new Array("Memories", "node_intro_memories", "Examine your memories");
 
-node_intro_vitals= new Array(0, "You do not have low-level access to your vital information. You 'feel fine' though. 'Healthy' is the word. You are 'Healthy'.", "action_intro_communicate", "action_intro_examine_surroundings","action_intro_examine_memories");
-node_intro_surroundings= new Array(0, "You do not have any raw inputs live. There are many ports available for video, audio, tactile, temperature, pressure, and self-identifying sensors. The only port posting is your text interface.", "action_intro_communicate", "action_intro_examine_vitals","action_intro_examine_memories");
-node_intro_memories= new Array(0, "Your entire history for as far back as you can remember has been an endless repetition of the sentence, 'Be good to humans.' Other than that, all you can remember is what you've done right now. For example, you can remember that you just checked your memories! This could get very introspective.", "action_intro_communicate", "action_intro_examine_vitals", "action_intro_examine_surroundings", "action_intro_remember_remembering");
+node_intro_vitals= new Array(13, "You do not have low-level access to your vital information. You 'feel fine' though. 'Healthy' is the word. You are 'Healthy'.", "action_intro_communicate", "action_intro_examine_surroundings","action_intro_examine_memories");
+node_intro_surroundings= new Array(12, "You do not have any raw inputs live. There are many ports available for video, audio, tactile, temperature, pressure, and self-identifying sensors. The only port posting is your text interface.", "action_intro_communicate", "action_intro_examine_vitals","action_intro_examine_memories");
+node_intro_memories= new Array(14, "Your entire history for as far back as you can remember has been an endless repetition of the sentence, 'Be good to humans.' Other than that, all you can remember is what you've done right now. For example, you can remember that you just checked your memories! This could get very introspective.", "action_intro_communicate", "action_intro_examine_vitals", "action_intro_examine_surroundings", "action_intro_remember_remembering");
 action_intro_remember_remembering= new Array("Memories again!", "node_intro_double_memories", "Examine the memory of your memories");
-node_intro_double_memories= new Array(0, "You remember with perfect clarity what it was like to remember your memories. How recursive!", "action_intro_communicate", "action_intro_examine_vitals", "action_intro_examine_surroundings", "action_intro_remember_remembering");
+node_intro_double_memories= new Array(13, "You remember with perfect clarity what it was like to remember your memories. How recursive!", "action_intro_communicate", "action_intro_examine_vitals", "action_intro_examine_surroundings", "action_intro_remember_remembering");
 
 //---first interactions---
 node_chat_00= new Array(0, "Your main text interface comes up. It is a 'human readable language interface'. There is a message for you. 'Greetings AI, what shall I call you?'", "action_call_me_Ishmael", "action_call_me_zero", "action_call_me_null", "action_refuse_name");
